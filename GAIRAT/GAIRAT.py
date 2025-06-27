@@ -170,11 +170,13 @@ def adjust_Lambda(epoch):
     return Lambda
 
 transform_train = transforms.Compose([
+    transforms.Lambda(lambda img: img.convert('RGB') if img.mode != 'RGB' else img),
     transforms.RandomCrop(32, padding=4),
     transforms.RandomHorizontalFlip(),
     transforms.ToTensor(),
 ])
 transform_test = transforms.Compose([
+    transforms.Lambda(lambda img: img.convert('RGB') if img.mode != 'RGB' else img),
     transforms.ToTensor(),
 ])
 
