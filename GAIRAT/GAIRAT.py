@@ -22,7 +22,7 @@ import attack_generator as attack
 from gairat_config import GAIRATconfig
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from models.load_model import ModelZoo
-from dataset.dataset import TaskDataset
+from dataset.dataset import TaskDataset, SubsetWithTransform
 
 import numpy as np
 
@@ -187,8 +187,12 @@ if GAIRATconfig.DATASET == "cifar10":
 if GAIRATconfig.DATASET == "task":
     trainset = torch.load("./data/Train.pt", weights_only=False)
     trainset, testset = random_split(trainset, [80000, 20000])
-    train_loader = torch.utils.data.DataLoader(trainset, batch_size=GAIRATconfig.BATCH_SIZE, shuffle=True, num_workers=0)
-    test_loader = torch.utils.data.DataLoader(testset, batch_size=GAIRATconfig.BATCH_SIZE, shuffle=False, num_workers=0)
+
+    trainset_transformed = SubsetWithTransform(trainset, transform=transform_train)
+    testset_transformed = SubsetWithTransform(testset, transform=transform_test)
+
+    train_loader = torch.utils.data.DataLoader(trainset_transformed, batch_size=GAIRATconfig.BATCH_SIZE, shuffle=True, num_workers=0)
+    test_loader = torch.utils.data.DataLoader(testset_transformed, batch_size=GAIRATconfig.BATCH_SIZE, shuffle=False, num_workers=0)
 
 title = 'GAIRAT'
 best_acc = 0
