@@ -8,12 +8,12 @@ class GAIRATconfig:
     NUM_STEPS = 10
     STEP_SIZE = 0.007
     SEED = 1
-    MODEL = "resnet18"
+    MODEL = "resnet50"
     DATASET = "task" # Choices: ['task', 'cifar10']
     NUM_CLASSES = 10
     BATCH_SIZE = 128
     RANDOM = True   # whether to initiat adversarial sample with random noise
-    RESUME = "./results/GAIRAT_method/checkpoint.pth.tar"   # whether to resume training
+    RESUME = None   # whether to resume training
     OUT_DIR = "./results/GAIRAT_method"
     LR_SCHEDULER = 'piecewise' # Choices: ['superconverge', 'piecewise', 'linear', 'onedrop', 'multipledecay', 'cosine']
     LR_MAX = 0.1
