@@ -11,7 +11,7 @@ from models.load_model import ModelZoo
 load_dotenv()
 TOKEN = os.getenv("TOKEN")
 
-MODEL_NAME = "resnet18"
+MODEL_NAME = "resnet50"
 METHOD = "GAIRAT"
 NUM_EXPERIMENT = 1
 
