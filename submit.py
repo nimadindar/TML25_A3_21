@@ -25,7 +25,7 @@ allowed_models = {
 with open(SAVED_PATH, "rb") as f:
     try:
         model = ModelZoo(MODEL_NAME, 10).load_model()
-        model = torch.nn.DataParallel(model)
+        # model = torch.nn.DataParallel(model)
     except Exception as e:
         raise Exception(
             f"Invalid model class, {e=}, only {allowed_models.keys()} are allowed",
@@ -36,11 +36,15 @@ with open(SAVED_PATH, "rb") as f:
         print(f"Loading the model from path: {SAVED_PATH} ...")
 
         checkpoint = torch.load(SAVED_PATH)
-        model.load_state_dict(checkpoint['state_dict'])
+        state_dict = checkpoint['state_dict']
 
-        torch.save(checkpoint['state_dict'], 
+        clean_state_dict = {k.replace('module.', ''): v for k, v in state_dict.items() if 'num_batches_tracked' not in k}
+
+        model.load_state_dict(clean_state_dict)
+
+        torch.save(clean_state_dict, 
                    f"./results/submissions/experiment_{NUM_EXPERIMENT}_method_{METHOD}_model_{MODEL_NAME}.pt")
-
+        print(model)
         model.eval()
         out = model(torch.randn(1, 3, 32, 32))
         print("Loading the model done successfully!")
@@ -53,7 +57,7 @@ with open(SAVED_PATH, "rb") as f:
 # Send the model to the server, replace the string "TOKEN" with the string of token provided to you
 response = requests.post("http://34.122.51.94:9090/robustness", 
                          files={"file": open(f"./results/submissions/experiment_{NUM_EXPERIMENT}_method_{METHOD}_model_{MODEL_NAME}.pt", "rb")}, 
-                         headers={"token": TOKEN, "model-name": "resnet18"})
+                         headers={"token": TOKEN, "model-name": MODEL_NAME})
 
 # Should be 400, the clean accuracy is too low
 print(response.json())
