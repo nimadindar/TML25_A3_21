@@ -1,7 +1,7 @@
 
 class GAIRATconfig:
 
-    EPOCHS = 2
+    EPOCHS = 120
     WEIGHT_DECAY = 2e-4
     MOMENTUM = 0.9
     EPSILON = 0.031
@@ -13,7 +13,7 @@ class GAIRATconfig:
     NUM_CLASSES = 10
     BATCH_SIZE = 128
     RANDOM = True   # whether to initiat adversarial sample with random noise
-    RESUME = None   # whether to resume training
+    RESUME = "./results/GAIRAT_method/checkpoint.pth.tar"   # whether to resume training
     OUT_DIR = "./results/GAIRAT_method"
     LR_SCHEDULER = 'piecewise' # Choices: ['superconverge', 'piecewise', 'linear', 'onedrop', 'multipledecay', 'cosine']
     LR_MAX = 0.1
