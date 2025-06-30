@@ -28,7 +28,9 @@ class ModelZoo:
         
     def load_model(self):
         model = self.allowed_models[self.model_name](weights=None)
-        model = self._modify_model(model)
+        # model = self._modify_model(model)
+        model.fc = nn.Linear(model.fc.weight.shape[1], self.num_classes)
+
         return model
 
     def _modify_model(self, model):
