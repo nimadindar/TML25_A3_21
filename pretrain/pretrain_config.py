@@ -2,12 +2,12 @@ class PretrainConfig:
     """
     Configuration file for setting up the adversarial pretraining of a model.
     """
-    MODEL = "resnet18"  # available options: 1. resnet18 2. resnet34 3. resnet50
+    MODEL = "resnet50"  # available options: 1. resnet18 2. resnet34 3. resnet50
 
-    EPOCHS = 3
+    EPOCHS = 100
     LR = 0.1
-    BATCH_SIZE = 512
-    TEST_BS = 512
+    BATCH_SIZE = 128
+    TEST_BS = 128
     OPTIMIZER = "sgd"   # available options: 1. SGD 2.Adam
     NUM_CLASSES = 1000
     MOMENTUM = 0.9
