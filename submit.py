@@ -35,7 +35,7 @@ with open(SAVED_PATH, "rb") as f:
         assert os.path.isfile(SAVED_PATH)
         print(f"Loading the model from path: {SAVED_PATH} ...")
 
-        checkpoint = torch.load(SAVED_PATH)
+        checkpoint = torch.load(SAVED_PATH, map_location=torch.device('cpu'))
         state_dict = checkpoint['state_dict']
 
         clean_state_dict = {k.replace('module.', ''): v for k, v in state_dict.items() if 'num_batches_tracked' not in k}
